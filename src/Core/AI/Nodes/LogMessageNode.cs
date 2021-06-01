@@ -15,7 +15,7 @@ namespace MissionControl.AI {
 			this.requestedState = requestedState;
 		}
 
-		protected override BehaviorTreeResults Tick() {
+		public override BehaviorTreeResults Tick() {
 			int currentRound = tree.battleTechGame.Combat.TurnDirector.CurrentRound;
 			int currentPhase = tree.battleTechGame.Combat.TurnDirector.CurrentPhase;
 			int actionCount = (AiUtils.IsOnFirstAction(unit)) ? 1 : 2;

@@ -7,8 +7,10 @@ using BattleTech;
 namespace MissionControl.Patches {
   [HarmonyPatch(typeof(MapMetaData), "GetCellAt")]
 	[HarmonyPatch(new Type[] { typeof(Point) })]
-  public class MapMetaDataGetCellAtPatch {
-    private static MapTerrainDataCell InvalidCell = new MapTerrainDataCell {
+  public class MapMetaDataGetCellAtPatch
+  {
+	private static readonly MapTerrainDataCell invalidCell;
+    private static readonly MapTerrainDataCell InvalidCell = invalidCell ??= new MapTerrainDataCell {
 			terrainSteepness = 1000f,
 			terrainHeight = 2000f,
 			MapEncounterLayerDataCell = new MapEncounterLayerDataCell {
@@ -23,7 +25,7 @@ namespace MissionControl.Patches {
       } catch (IndexOutOfRangeException) {
         __result = InvalidCell;
       }
-			return false; 
+		return false; 
     }
   }
 }

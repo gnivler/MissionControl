@@ -1,7 +1,6 @@
 using System.Linq;
 
 using System.Collections.Generic;
-
 using BattleTech;
 
 using MissionControl.Rules;
@@ -26,11 +25,11 @@ namespace MissionControl.LogicComponents.Spawners {
 			}
 		}
 
-		protected override void OnTriggerSpawn(MessageCenterMessage message) {
+		public override void OnTriggerSpawn(MessageCenterMessage message) {
 			base.OnTriggerSpawn(message);
 		}
 
-		protected override void SpawnUnits(bool offScreen) {
+		public override void SpawnUnits(bool offScreen) {
 			base.SpawnUnits(offScreen);
 
 			if (this.teamDefinitionGuid == EncounterRules.PLAYER_TEAM_ID) {
