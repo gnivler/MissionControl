@@ -28,15 +28,14 @@ namespace MissionControl.Patches {
         System.DateTime? date = DataManager.Instance.GetSimGameCurrentDate();
 
         // This is required because on the 3rd+ contract restart something bugs out and harmony skips the GenerateTeam method but runs pre- and post-fix
-        System.Reflection.MethodInfo generateTeamMethod = AccessTools.Method(typeof(ContractOverride), "GenerateTeam");
-        generateTeamMethod.Invoke(__instance, new object[] { MetadataDatabase.Instance, __instance.player1Team, date, companyTags });
-        generateTeamMethod.Invoke(__instance, new object[] { MetadataDatabase.Instance, __instance.player2Team, date, companyTags });
-        generateTeamMethod.Invoke(__instance, new object[] { MetadataDatabase.Instance, __instance.employerTeam, date, companyTags });
-        generateTeamMethod.Invoke(__instance, new object[] { MetadataDatabase.Instance, __instance.employersAllyTeam, date, companyTags });
-        generateTeamMethod.Invoke(__instance, new object[] { MetadataDatabase.Instance, __instance.targetTeam, date, companyTags });
-        generateTeamMethod.Invoke(__instance, new object[] { MetadataDatabase.Instance, __instance.targetsAllyTeam, date, companyTags });
-        generateTeamMethod.Invoke(__instance, new object[] { MetadataDatabase.Instance, __instance.neutralToAllTeam, date, companyTags });
-        generateTeamMethod.Invoke(__instance, new object[] { MetadataDatabase.Instance, __instance.hostileToAllTeam, date, companyTags });
+        __instance.GenerateTeam(MetadataDatabase.instance, __instance.player1Team,date, companyTags);
+        __instance.GenerateTeam(MetadataDatabase.instance, __instance.player2Team,date, companyTags);
+        __instance.GenerateTeam(MetadataDatabase.instance, __instance.employerTeam,date, companyTags);
+        __instance.GenerateTeam(MetadataDatabase.instance, __instance.employersAllyTeam,date, companyTags);
+        __instance.GenerateTeam(MetadataDatabase.instance, __instance.targetTeam,date, companyTags);
+        __instance.GenerateTeam(MetadataDatabase.instance, __instance.targetsAllyTeam,date, companyTags);
+        __instance.GenerateTeam(MetadataDatabase.instance, __instance.neutralToAllTeam,date, companyTags);
+        __instance.GenerateTeam(MetadataDatabase.instance, __instance.hostileToAllTeam,date, companyTags);
       }
     }
   }

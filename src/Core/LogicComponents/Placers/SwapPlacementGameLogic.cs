@@ -1,8 +1,6 @@
 using UnityEngine;
 
 using BattleTech;
-using BattleTech.Framework;
-
 using HBS.Util;
 
 using MissionControl.Data;

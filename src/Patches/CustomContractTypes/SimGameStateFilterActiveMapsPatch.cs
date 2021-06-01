@@ -6,7 +6,6 @@ using BattleTech.Framework;
 
 using System.Linq;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace MissionControl.Patches {
   [HarmonyPatch(typeof(SimGameState), "FilterActiveMaps")]
@@ -25,22 +24,21 @@ namespace MissionControl.Patches {
         int weight = level.Map.Weight;
 
         // Get index1 of element in the rootList
-        List<MapAndEncounters> rootList = (List<MapAndEncounters>)Traverse.Create(activeMaps).Field("rootList").GetValue();
-        int indexOfLevelInRootList = rootList.IndexOf(level);
+        int indexOfLevelInRootList = activeMaps.rootList.IndexOf(level);
 
         // Get index2 of element in activeList (if it contains it)
-        List<MapAndEncounters> activeList = (List<MapAndEncounters>)Traverse.Create(activeMaps).Field("activeList").GetValue();
-        if (activeList.Contains(level)) {
-          indexOfLevelInActiveList = activeList.IndexOf(level);
+        if (activeMaps.activeList.Contains(level)) {
+          indexOfLevelInActiveList = activeMaps.activeList.IndexOf(level);
         }
 
         // Set the weight in the rootWeights in index1 position
-        List<int> rootWeights = (List<int>)Traverse.Create(activeMaps).Property("rootWeights").GetValue();
+        List<int> rootWeights = activeMaps.rootWeights;
         rootWeights[indexOfLevelInRootList] = weight;
 
         // if index2 is >= 0, remove from index2 of activeWeights
-        if (indexOfLevelInActiveList >= 0) {
-          List<int> activeWeights = (List<int>)Traverse.Create(activeMaps).Property("activeWeights").GetValue();
+        if (indexOfLevelInActiveList >= 0)
+        {
+          List<int> activeWeights = activeMaps.activeWeights;
           activeWeights[indexOfLevelInActiveList] = weight;
         }
       }
@@ -50,9 +48,7 @@ namespace MissionControl.Patches {
       List<MapAndEncounters> mapsToRemove = new List<MapAndEncounters>();
 
       StarSystem system = MissionControl.Instance.System;
-      var validParticipants = AccessTools.Method(typeof(SimGameState), "GetValidParticipants").Invoke(simGameState, new object[] { system });
-      MethodInfo GetValidFactionMethod = AccessTools.Method(typeof(SimGameState), "GetValidFaction");
-      MethodInfo DoesContractMeetRequirementsMethod = AccessTools.Method(typeof(SimGameState), "DoesContractMeetRequirements");
+      var validParticipants = simGameState.GetValidParticipants(system);
 
       for (int i = 0; i < activeMaps.Count; i++) {
         MapAndEncounters level = activeMaps[i];
@@ -70,7 +66,7 @@ namespace MissionControl.Patches {
               ContractOverride contractOverride = contractOverrides[j - 1];
               // Main.LogDebug($"[FilterOnMapsWithEncountersWithValidContractRequirements] '{contractTypeId}' - contractOverride is: {contractOverride.ID}");
               // Main.LogDebug($"[FilterOnMapsWithEncountersWithValidContractRequirements] '{contractTypeId}' - validParticipants is: {validParticipants}");
-              bool doesContractHaveValidFactions = (bool)GetValidFactionMethod.Invoke(simGameState, new object[] { system, validParticipants, contractOverride.requirementList, null });
+              bool doesContractHaveValidFactions = simGameState.GetValidFaction(system, validParticipants, contractOverride.requirementList, out _);
               // Main.LogDebug($"[FilterOnMapsWithEncountersWithValidContractRequirements] '{contractTypeId}' - Contract '{contractOverride.ID}' has valid fations?: {doesContractHaveValidFactions}");
               if (!doesContractHaveValidFactions) {
                 // Main.LogDebug($"[FilterOnMapsWithEncountersWithValidContractRequirements] '{contractTypeId}' - Removing Contract '{contractOverride.ID}' from potential list");
@@ -78,7 +74,7 @@ namespace MissionControl.Patches {
                 continue;
               }
 
-              bool doesContractMeetReqs = (bool)DoesContractMeetRequirementsMethod.Invoke(simGameState, new object[] { system, level, contractOverride });
+              bool doesContractMeetReqs = simGameState.DoesContractMeetRequirements(system, level, contractOverride);
               if (doesContractMeetReqs) {
                 // At least one contract override meets the requirements to prevent the infinite spinner so ignore this logic now and continue to the next map/encounter combo
                 // Main.LogDebug($"[FilterOnMapsWithEncountersWithValidContractRequirements] '{contractTypeId}' - Level '{level.Map.MapName}.{encounterLayerMDD.Name}' has at least one valid contract override");
@@ -117,10 +113,10 @@ namespace MissionControl.Patches {
       // If there are no more active maps, reset the biomes/maps list
       Main.Logger.LogWarning($"[FilterOnMapsWithEncountersWithValidContractRequirements] No valid map/encounter combinations. Handling lack of map/encounter situation.");
       StarSystem system = MissionControl.Instance.System;
-      List<string> mapDiscardPile = (List<string>)AccessTools.Field(typeof(SimGameState), "mapDiscardPile").GetValue(simGameState);
+      List<string> mapDiscardPile = simGameState.mapDiscardPile;
       mapDiscardPile.Clear();
 
-      WeightedList<MapAndEncounters> playableMaps = (WeightedList<MapAndEncounters>)AccessTools.Method(typeof(SimGameState), "GetSinglePlayerProceduralPlayableMaps").Invoke(null, new object[] { system });
+      WeightedList<MapAndEncounters> playableMaps = SimGameState.GetSinglePlayerProceduralPlayableMaps(system);
       IEnumerable<int> source = from map in playableMaps select map.Map.Weight;
       WeightedList<MapAndEncounters> weightedList = new WeightedList<MapAndEncounters>(WeightedListType.WeightedRandom, playableMaps.ToList(), source.ToList<int>(), 0);
 
@@ -132,13 +128,12 @@ namespace MissionControl.Patches {
       FixActiveMapWeights(activeMaps);
     }
 
-    private static void HandleContractRepeats(SimGameState simGameState, WeightedList<MapAndEncounters> activeMaps) {
-      List<string> mapDiscardPile = (List<string>)AccessTools.Field(typeof(SimGameState), "mapDiscardPile").GetValue(simGameState);
-      MethodInfo DoesActiveFlashpointUseSameMapMethod = AccessTools.Method(typeof(SimGameState), "DoesActiveFlashpointUseSameMap");
-
+    private static void HandleContractRepeats(SimGameState simGameState, WeightedList<MapAndEncounters> activeMaps)
+    {
+      List<string> mapDiscardPile = simGameState.mapDiscardPile;
       for (int num = activeMaps.Count - 1; num >= 0; num--) {
         Map_MDD map = activeMaps[num].Map;
-        bool doesActiveFlashpointUseSameMap = (bool)DoesActiveFlashpointUseSameMapMethod.Invoke(simGameState, new object[] { map.MapName });
+        bool doesActiveFlashpointUseSameMap = simGameState.DoesActiveFlashpointUseSameMap(map._mapName);
 
         if (mapDiscardPile.Contains(map.MapID) || doesActiveFlashpointUseSameMap) {
           activeMaps.RemoveAt(num);

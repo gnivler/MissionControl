@@ -1,8 +1,4 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-
-using MissionControl;
 
 public static class ComponentExtensions {
   public static Component CopyComponent(this GameObject destination, Component original) {  

@@ -1,13 +1,7 @@
 using UnityEngine;
-
-using System;
 using System.Collections.Generic;
 
 using BattleTech;
-
-using Harmony;
-
-using MissionControl;
 
 /*
   AI Logic - Move To Follow Lance

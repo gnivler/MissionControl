@@ -1,4 +1,3 @@
-using System;
 using HBS.Util;
 
 namespace MissionControl.Messages {

@@ -1,10 +1,5 @@
 using Harmony;
-
-using UnityEngine;
-
 using BattleTech;
-
-using System.Collections.Generic;
 
 namespace MissionControl.Patches {
   [HarmonyPatch(typeof(EncounterLayerData), "OverridePlots")]

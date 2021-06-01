@@ -1,16 +1,8 @@
-using UnityEngine;
-
 using System;
 using System.Collections.Generic;
-
-using BattleTech;
 using BattleTech.Framework;
-using BattleTech.Designed;
-
 using MissionControl.Trigger;
 using MissionControl.Messages;
-using MissionControl.Conditional;
-
 using Newtonsoft.Json.Linq;
 
 namespace MissionControl.ContractTypeBuilders {

@@ -1,6 +1,3 @@
-using System.Linq;
-using System.Reflection;
-using System.Collections;
 using System.Collections.Generic;
 
 using Harmony;
@@ -8,7 +5,6 @@ using Harmony;
 using BattleTech;
 
 using MissionControl.AI;
-using MissionControl.Utils;
 
 namespace MissionControl {
   public class AiManager {
@@ -57,8 +53,9 @@ namespace MissionControl {
           }
         }
 
-        if (nodeSearchResults != null) {
-          string name = (string)AccessTools.Field(typeof(BehaviorNode), "name").GetValue(nodeSearchResults.Node);
+        if (nodeSearchResults != null)
+        {
+          string name = nodeSearchResults.Node.name;
           Main.LogDebug($"[FindNode] Found target from path '{customBranch.Path}'. Target found was '{name}'");
           return nodeSearchResults;
         }
@@ -70,8 +67,9 @@ namespace MissionControl {
     private NodeSearchResult FindNode(BehaviorNode parent, string nodeName) {
       if (parent is CompositeBehaviorNode) {
         CompositeBehaviorNode compositeParent = (CompositeBehaviorNode)parent;
-        int index = compositeParent.Children.FindIndex(child => {
-          string childName = (string)AccessTools.Field(typeof(BehaviorNode), "name").GetValue(child);
+        int index = compositeParent.Children.FindIndex(child =>
+        {
+          string childName = child.name;
           if (childName == nodeName) return true;
           return false;
         });
@@ -80,7 +78,7 @@ namespace MissionControl {
         return null;
       }
 
-      string name = (string)AccessTools.Field(typeof(BehaviorNode), "name").GetValue(parent);
+      string name = parent.name;
       Main.Logger.LogError($"[FindNode] BehaviourNode parent '{name}' is not a composite node. Paths for custom behaviour branches can only contain composite nodes.");
       return null;
     }

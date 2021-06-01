@@ -1,9 +1,5 @@
 using BattleTech;
 
-using Harmony;
-
-using System.Linq;
-
 namespace MissionControl.Result {
   public class SetTeamShareVisionWithAlliesResult : EncounterResult {
     public string Team { get; set; }

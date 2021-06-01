@@ -29,12 +29,12 @@ namespace MissionControl.Result {
           Main.LogDebug($"[SetIsObjectiveTargetByTagResult] Found building '{building.GameRep.name} - {building.DisplayName}'");
           ObstructionGameLogic obstructionGameLogic = building.GameRep.GetComponent<ObstructionGameLogic>();
           obstructionGameLogic.isObjectiveTarget = true;
-          AccessTools.Field(typeof(BattleTech.Building), "isObjectiveTarget").SetValue(combatant, true);
+          ((BattleTech.Building) combatant).isObjectiveTarget = true;
         }
 
         CombatHUDInWorldElementMgr inworldElementManager = GameObject.Find("uixPrfPanl_HUD(Clone)").GetComponent<CombatHUDInWorldElementMgr>();
-        AccessTools.Method(typeof(CombatHUDInWorldElementMgr), "AddTickMark").Invoke(inworldElementManager, new object[] { combatant });
-        AccessTools.Method(typeof(CombatHUDInWorldElementMgr), "AddInWorldActorElements").Invoke(inworldElementManager, new object[] { combatant });
+        inworldElementManager.AddTickMark(combatant);
+        inworldElementManager.AddInWorldActorElements(combatant);
       }
     }
   }

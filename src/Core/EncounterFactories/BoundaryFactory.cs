@@ -1,11 +1,5 @@
 using UnityEngine;
-
-using System.Collections.Generic;
-
 using BattleTech;
-using BattleTech.Framework;
-
-using MissionControl.Utils;
 
 namespace MissionControl.EncounterFactories {
   public class BoundaryFactory {

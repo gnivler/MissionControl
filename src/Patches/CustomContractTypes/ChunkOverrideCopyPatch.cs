@@ -2,8 +2,6 @@ using Harmony;
 
 using BattleTech;
 using BattleTech.Framework;
-
-using System;
 using System.Collections.Generic;
 
 namespace MissionControl.Patches {

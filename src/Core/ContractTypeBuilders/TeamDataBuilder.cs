@@ -3,12 +3,6 @@ using UnityEngine;
 using Newtonsoft.Json.Linq;
 
 using BattleTech;
-using BattleTech.Designed;
-using BattleTech.Framework;
-
-using System;
-using System.Collections.Generic;
-
 using MissionControl.Result;
 using MissionControl.Messages;
 

@@ -1,18 +1,9 @@
 using UnityEngine;
-
-using System.Collections.Generic;
-
 using BattleTech;
 using BattleTech.Framework;
-using BattleTech.Designed;
-using BattleTech.Framework.Save;
-
-using HBS.Collections;
-
 using MissionControl.Result;
 using MissionControl.Conditional;
 using MissionControl.Logic;
-using MissionControl.Messages;
 
 namespace MissionControl.Trigger {
   public class ShowObjectiveTrigger : EncounterTrigger {

@@ -49,10 +49,12 @@ namespace MissionControl.Result {
         }
 
         CombatHUDInWorldElementMgr inworldElementManager = GameObject.Find("uixPrfPanl_HUD(Clone)").GetComponent<CombatHUDInWorldElementMgr>();
-        if (oldTeam.GUID == TeamUtils.NEUTRAL_TO_ALL_TEAM_ID) {
-          AccessTools.Method(typeof(CombatHUDInWorldElementMgr), "AddInWorldActorElements").Invoke(inworldElementManager, new object[] { actor });
-        } else if (newTeam.GUID == TeamUtils.NEUTRAL_TO_ALL_TEAM_ID) {
-          AccessTools.Method(typeof(CombatHUDInWorldElementMgr), "RemoveInWorldUI").Invoke(inworldElementManager, new object[] { actor.GUID });
+        if (oldTeam.GUID == TeamUtils.NEUTRAL_TO_ALL_TEAM_ID)
+        {
+          inworldElementManager.AddInWorldActorElements(actor);
+        } else if (newTeam.GUID == TeamUtils.NEUTRAL_TO_ALL_TEAM_ID)
+        {
+          inworldElementManager.RemoveInWorldUI(actor.GUID);
         }
 
         CombatantSwitchedTeams message = new CombatantSwitchedTeams(actor.GUID, newTeam.GUID);

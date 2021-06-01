@@ -4,8 +4,6 @@ using System;
 
 using BattleTech;
 using BattleTech.Designed;
-using BattleTech.Framework;
-
 using MissionControl.EncounterFactories;
 
 namespace MissionControl.Logic {

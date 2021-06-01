@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 
 using BattleTech;
-using BattleTech.Designed;
 using BattleTech.Framework;
 
 using HBS.Collections;

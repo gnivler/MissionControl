@@ -1,8 +1,4 @@
-using System.Collections.Generic;
-
 using Newtonsoft.Json;
-
-using BattleTech;
 
 namespace MissionControl.Config {
 	public class DisableWhenMaxTonnage {

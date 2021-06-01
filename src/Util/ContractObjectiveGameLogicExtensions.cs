@@ -13,7 +13,7 @@ public static class ContractObjectiveGameLogicExtensions {
 
       if (objectiveGameLogic.IsAnInactiveContractControlledObjective()) {
         MissionControl.Main.LogDebug($"[SetInactiveContractControlledObjectivesNotRequired] Setting '{objectiveGameLogic.gameObject.name}' as non-primary");
-        AccessTools.Field(typeof(ObjectiveGameLogic), "primary").SetValue(objectiveGameLogic, false);
+        objectiveGameLogic.primary = false;
       }
     }
   }

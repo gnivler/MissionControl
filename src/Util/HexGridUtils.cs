@@ -1,10 +1,7 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 
 using BattleTech;
-
-using MissionControl;
 
 public static class HexGridUtils {
   public static List<Vector3> GetGridPointsAroundPointWithinRadius(this HexGrid hexGrid, Vector3 position, int minRadius, int maxRadius) {  

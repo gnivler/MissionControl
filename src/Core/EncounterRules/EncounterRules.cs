@@ -1,14 +1,9 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 
 using BattleTech;
-using BattleTech.Framework;
-
 using MissionControl.Logic;
 using MissionControl.Trigger;
 using MissionControl.Config;

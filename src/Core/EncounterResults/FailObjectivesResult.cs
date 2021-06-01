@@ -3,8 +3,6 @@ using BattleTech.Framework;
 using System.Linq;
 using System.Collections.Generic;
 
-using MissionControl.Utils;
-
 namespace MissionControl.Result {
   public class FailObjectivesResult : EncounterResult {
     public List<string> ObjectiveNameWhiteList { get; set; } = new List<string>();
@@ -21,7 +19,7 @@ namespace MissionControl.Result {
             objective.encounterObject.CompleteObjective("Dynamic Withdraw Triggered", CompleteObjectiveType.Failed, true, true);
           }
         });
-        ReflectionHelper.SetPrivateField(obj, "currentObjectiveStatus", ObjectiveStatus.Failed);
+        obj.currentObjectiveStatus = ObjectiveStatus.Failed;
       });
     }
   }

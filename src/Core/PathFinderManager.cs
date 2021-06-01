@@ -1,14 +1,12 @@
 using UnityEngine;
 using System;
 using System.Collections.Generic;
-
+using System.Net.Mime;
 using BattleTech;
 
 using Harmony;
 
 using HBS.Collections;
-
-using MissionControl.Utils;
 
 namespace MissionControl {
   public class PathFinderManager {
@@ -234,9 +232,9 @@ namespace MissionControl {
       AbstractActor pathfindingActor = GetPathFindingActor(type);
       SetupPathfindingActor(positionNode.Position, pathfindingActor);
 
-      AccessTools.Field(typeof(PathNodeGrid), "open").SetValue(pathfindingActor.Pathing.CurrentGrid, new List<PathNode>() { positionNode });
+      pathfindingActor.Pathing.CurrentGrid.open = new List<PathNode>{ positionNode};
       pathfindingActor.Pathing.CurrentGrid.UpdateBuild(1);
-      List<PathNode> neighbours = AccessTools.Field(typeof(PathNodeGrid), "open").GetValue(pathfindingActor.Pathing.CurrentGrid) as List<PathNode>;
+      List<PathNode> neighbours = pathfindingActor.Pathing.CurrentGrid.open;
 
       foreach (PathNode neighbourNode in neighbours) {
         float cost = pathfindingActor.Pathing.CurrentGrid.GetTerrainModifiedCost(positionNode, neighbourNode, pathfindingActor.MaxWalkDistance);
@@ -251,7 +249,7 @@ namespace MissionControl {
       AbstractActor pathfindingActor = GetPathFindingActor(type);
       SetupPathfindingActor(positionNode.Position, pathfindingActor);
 
-      AccessTools.Field(typeof(PathNodeGrid), "open").SetValue(pathfindingActor.Pathing.CurrentGrid, new List<PathNode>() { positionNode });
+      pathfindingActor.Pathing.CurrentGrid.open = new List<PathNode> {positionNode};
       pathfindingActor.Pathing.UpdateBuild(10000);
       pathfindingActor.Pathing.UpdateFreePath(validityPosition, validityPosition, false, false);
 
@@ -315,9 +313,10 @@ namespace MissionControl {
       pathFinderVehicle = null;
     }
 
-    private void UnsubscribePathfinders() {
-      if (pathFinderMech != null) AccessTools.Method(typeof(AbstractActor), "SubscribeMessages").Invoke(pathFinderMech, new object[] { false });
-      if (pathFinderVehicle != null) AccessTools.Method(typeof(AbstractActor), "SubscribeMessages").Invoke(pathFinderVehicle, new object[] { false });
+    private void UnsubscribePathfinders()
+    {
+      if (pathFinderMech != null) pathFinderMech.SubscribeMessages(false);
+      if (pathFinderVehicle != null) pathFinderVehicle.SubscribeMessages(false);
     }
   }
 }

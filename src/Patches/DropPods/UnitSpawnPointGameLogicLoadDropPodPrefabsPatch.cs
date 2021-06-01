@@ -22,12 +22,12 @@ namespace MissionControl.Patches {
         newdropPodVfxPrefab.transform.position = __instance.transform.position;
         newdropPodVfxPrefab.Pause();
         newdropPodVfxPrefab.Clear();
-        AccessTools.Field(typeof(UnitSpawnPointGameLogic), "dropPodVfxPrefab").SetValue(__instance, newdropPodVfxPrefab);
+        __instance.dropPodVfxPrefab = newdropPodVfxPrefab;
       }
 
       if (dropPodLandedPrefab != null) {
         GameObject newDropPodLandedPrefab = UnityEngine.Object.Instantiate<GameObject>(dropPodLandedPrefab, offscreenDropPodPosition, Quaternion.identity);
-        AccessTools.Field(typeof(UnitSpawnPointGameLogic), "dropPodLandedPrefab").SetValue(__instance, newDropPodLandedPrefab);
+        __instance.dropPodLandedPrefab = newDropPodLandedPrefab;
       }
 
       return false;

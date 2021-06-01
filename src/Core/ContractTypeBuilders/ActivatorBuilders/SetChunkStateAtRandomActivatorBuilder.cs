@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 
 using BattleTech;
-using BattleTech.Designed;
-using BattleTech.Framework;
-
 using MissionControl.EncounterFactories;
 
 using Newtonsoft.Json.Linq;

@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-
-using Harmony;
-
 using BattleTech;
 
 namespace MissionControl.AI {
@@ -17,7 +13,7 @@ namespace MissionControl.AI {
       this.tree = behaviourTree;
       this.unit = unit;
 
-      string targetName = (string)AccessTools.Field(typeof(BehaviorNode), "name").GetValue(target);
+      string targetName = target.name;
       Main.LogDebug($"[{this.GetType().Name}] Injecting custom behaviour branch {InjectionOrder} '{targetName}'");
 
       SequenceNode testBranchNodeRoot = new SequenceNode("follow_lance_if_following", behaviourTree, unit);

@@ -1,11 +1,7 @@
 using UnityEngine;
-
-using System.Collections;
 using System.Collections.Generic;
 
 using BattleTech;
-using BattleTech.Designed;
-using BattleTech.Framework;
 
 public static class GameObjextExtensions {
   public static List<GameObject> FindAllContains(this GameObject go, string name) {

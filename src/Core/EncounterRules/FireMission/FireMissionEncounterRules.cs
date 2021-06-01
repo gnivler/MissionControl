@@ -1,4 +1,3 @@
-using BattleTech;
 using MissionControl.Logic;
 
 namespace MissionControl.Rules {

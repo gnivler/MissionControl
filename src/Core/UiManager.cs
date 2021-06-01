@@ -93,15 +93,15 @@ namespace MissionControl {
 
       GameObject skirmishMenuGo = new GameObject("SkirmishMenuBypass");
       SkirmishSettings_Beta skirmishMenu = skirmishMenuGo.AddComponent<SkirmishSettings_Beta>();
-      AccessTools.Field(typeof(SkirmishSettings_Beta), "playButton").SetValue(skirmishMenu, new HBSDOTweenButton());
-      AccessTools.Field(typeof(SkirmishSettings_Beta), "playerLancePreview").SetValue(skirmishMenu, new LancePreviewPanel());
-      AccessTools.Field(typeof(SkirmishSettings_Beta), "opponentLancePreview").SetValue(skirmishMenu, new LancePreviewPanel());
-      AccessTools.Field(typeof(SkirmishSettings_Beta), "playerSettings").SetValue(skirmishMenu, ActiveOrDefaultSettings.CloudSettings);
-      AccessTools.Field(typeof(SkirmishSettings_Beta), "mapModule").SetValue(skirmishMenu, new MapModule());
-      AccessTools.Field(typeof(SkirmishSettings_Beta), "lanceBudgetDropdown").SetValue(skirmishMenu, new MockTMPDropdown());
+      skirmishMenu.playButton = new HBSDOTweenButton();
+      skirmishMenu.playerLancePreview = new LancePreviewPanel();
+      skirmishMenu.opponentLancePreview = new LancePreviewPanel();
+      skirmishMenu.playerSettings = ActiveOrDefaultSettings.CloudSettings;
+      skirmishMenu.mapModule = new MapModule();
+      skirmishMenu.lanceBudgetDropdown = new MockTMPDropdown();
 
       skirmishMenu.Init();
-      AccessTools.Method(typeof(SkirmishSettings_Beta), "LoadLanceConfiguratorData").Invoke(skirmishMenu, null);
+      skirmishMenu.LoadLanceConfiguratorData();
 
       UnityGameInstance.Instance.StartCoroutine(WaitForLoadingCurtain(skirmishMenu));
     }
@@ -111,8 +111,9 @@ namespace MissionControl {
       LoadQuickSkirmishMap(skirmishMenu);
     }
 
-    private void LoadQuickSkirmishMap(SkirmishSettings_Beta skirmishMenu) {
-      AccessTools.Method(typeof(SkirmishSettings_Beta), "LaunchMap").Invoke(skirmishMenu, null);
+    private void LoadQuickSkirmishMap(SkirmishSettings_Beta skirmishMenu)
+    {
+      skirmishMenu.LaunchMap();
     }
 
     private void ResetPatchValues() {

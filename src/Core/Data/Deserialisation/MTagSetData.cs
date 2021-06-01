@@ -1,7 +1,5 @@
 using Newtonsoft.Json;
 
-using HBS.Collections;
-
 namespace MissionControl.Data {
   public class MTagSetData {
     [JsonProperty("items")]

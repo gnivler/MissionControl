@@ -1,11 +1,7 @@
 using UnityEngine;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 
 using BattleTech;
-using BattleTech.Designed;
-
 using MissionControl.LogicComponents.Spawners;
 
 namespace MissionControl.EncounterFactories {

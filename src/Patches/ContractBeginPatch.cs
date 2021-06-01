@@ -25,7 +25,7 @@ namespace MissionControl.Patches {
 
         contractOverride.player1Team.lanceOverrideList.Add(new LanceOverride());
 
-        AccessTools.Property(typeof(Contract), "Override").SetValue(__instance, contractOverride, null);
+        __instance.Override = contractOverride;
       }
 
       Init(__instance);

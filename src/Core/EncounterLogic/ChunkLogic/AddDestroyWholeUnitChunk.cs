@@ -1,17 +1,10 @@
-using UnityEngine;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 
 using BattleTech;
 using BattleTech.Designed;
 using BattleTech.Framework;
-
-using MissionControl.Logic;
 using MissionControl.Rules;
 using MissionControl.EncounterFactories;
-using MissionControl.Utils;
-
 using Harmony;
 
 namespace MissionControl.Logic {
@@ -80,10 +73,11 @@ namespace MissionControl.Logic {
         Main.Settings.ActiveAdditionalLances.GetRewards()
       );
 
-      if (isPrimary) {
-        AccessTools.Field(typeof(ObjectiveGameLogic), "primary").SetValue(objective, true);
+      if (isPrimary)
+      {
+        objective.primary = true;
       } else {
-        AccessTools.Field(typeof(ObjectiveGameLogic), "primary").SetValue(objective, false);
+        objective.primary = false;
       }
 
       DestroyLanceObjectiveRef destroyLanceObjectiveRef = new DestroyLanceObjectiveRef();

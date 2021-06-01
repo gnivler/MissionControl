@@ -18,7 +18,6 @@ using HBS.Data;
 using MissionControl.Data;
 using MissionControl.Config;
 using MissionControl.Messages;
-using MissionControl.Utils;
 
 namespace MissionControl {
   public class DataManager {
@@ -450,8 +449,9 @@ namespace MissionControl {
       This adds any custom messages to the message center scopes
       Without this, when leaving combat (restarting or exiting) an error will occur
     */
-    public void InjectMessageScopes() {
-      Dictionary<MessageCenterMessageType, MessageCenter.MessageScope> messageScopes = (Dictionary<MessageCenterMessageType, MessageCenter.MessageScope>)ReflectionHelper.GetPrivateStaticField(typeof(MessageCenter), "messageScopes");
+    public void InjectMessageScopes()
+    {
+      Dictionary<MessageCenterMessageType, MessageCenter.MessageScope> messageScopes = MessageCenter.messageScopes;
       MessageTypes[] customMessageTypes = (MessageTypes[])Enum.GetValues(typeof(MessageTypes));
       for (int i = 0; i < customMessageTypes.Length; i++) {
         Main.LogDebug($"[InjectMessageScopes] Injecting custom message {customMessageTypes.ToString()} into 'MessageCenter.MessageScope.CombatGame'");

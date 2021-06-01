@@ -1,10 +1,6 @@
 using Harmony;
 
 using UnityEngine;
-
-using System;
-using System.Linq;
-using System.IO;
 using System.Reflection;
 using System.Collections.Generic;
 
@@ -40,7 +36,7 @@ namespace MissionControl.Patches {
             return;
           }
 
-          AssetBundleManager assetBundleManager = (AssetBundleManager)Traverse.Create(UnityGameInstance.BattleTechGame.DataManager).Property("AssetBundleManager").GetValue();
+          AssetBundleManager assetBundleManager = UnityGameInstance.BattleTechGame.DataManager.AssetBundleManager;
           AssetBundle bundle = LoadAssetBundle(assetBundleManager, bundleName);
 
           if (bundle != null) {
@@ -60,23 +56,18 @@ namespace MissionControl.Patches {
     }
 
     public static AssetBundle LoadAssetBundle(AssetBundleManager assetBundleManager, string assetBundleName) {
-      string assetBundlePath = (string)AccessTools.Method(typeof(AssetBundleManager), "AssetBundleNameToFilepath").Invoke(assetBundleManager, new object[] { assetBundleName });
+      string assetBundlePath = AssetBundleManager.AssetBundleNameToFilepath(assetBundleName);
       return AssetBundle.LoadFromFile(assetBundlePath); // Purposely synchronous
     }
 
     public static void AddToLoadedBundles(AssetBundleManager assetBundleManager, string assetName, string assetBundleName, AssetBundle assetBundle) {
-      Assembly assembly = AppDomain.CurrentDomain.GetAssemblies().First(
-        a => (a.FullName.StartsWith("Assembly-CSharp") && !a.FullName.StartsWith("Assembly-CSharp-firstpass"))
-      );
-      var assetTrackerType = assembly.GetType("BattleTech.Assetbundles.AssetBundleTracker");
-      var assetTracker = Activator.CreateInstance(assetTrackerType, new object[] { assetBundle, false });
-      Traverse.Create(assetTracker).Property("CurrentState").SetValue(3);
-
-      AssetBundleIORequestOperation hijackedRequest = (AssetBundleIORequestOperation)Activator.CreateInstance(typeof(AssetBundleIORequestOperation), new object[] { "ignore_this_message", assetBundleName, false, (LoadOperationComplete)EmptyOnLoaded, (uint)0u, (uint)0u });
-      AccessTools.Property(typeof(AssetBundleLoadOperation), "AssetBundle").SetValue(hijackedRequest, assetBundle);
-      AccessTools.Property(typeof(AssetBundleLoadOperation), "Tracker").SetValue(hijackedRequest, assetTracker);
-
-      AccessTools.Method(typeof(AssetBundleManager), "BundleLoaded").Invoke(assetBundleManager, new object[] { hijackedRequest });
+      var assetTracker = new AssetBundleTracker(assetBundle, false);
+      AssetBundleIORequestOperation hijackedRequest = new AssetBundleIORequestOperation("ignore_this_message", assetBundleName, false, EmptyOnLoaded)
+      {
+        AssetBundle = assetBundle,
+        Tracker = assetTracker
+      };
+      assetBundleManager.BundleLoaded(hijackedRequest);
     }
 
     public static void EmptyOnLoaded(AssetBundleLoadOperation operation) { }

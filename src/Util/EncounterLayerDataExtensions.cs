@@ -1,10 +1,6 @@
 using UnityEngine;
 
 using System.IO;
-using System.Linq;
-using System.Collections;
-using System.Collections.Generic;
-
 using BattleTech;
 using BattleTech.Data;
 using BattleTech.Framework;
@@ -48,7 +44,7 @@ public static class EncounterLayerDataExtensions {
     EncounterLayerParent component = MissionControl.MissionControl.Instance.EncounterLayerParent;
     MapMetaDataExporter mapMetaExporter = component.GetComponent<MapMetaDataExporter>();
 
-    AccessTools.Method(typeof(MapMetaDataExporter), "LoadMapMetaDataOnly").Invoke(mapMetaExporter, new object[] { UnityGameInstance.BattleTechGame.Combat.MapMetaData, dataManager });
+    mapMetaExporter.LoadMapMetaDataOnly(UnityGameInstance.BattleTechGame.Combat.MapMetaData, dataManager);
 
     MapMetaData mapMetaData = mapMetaExporter.mapMetaData;
     InclineMeshData inclineMeshData = mapMetaExporter.inclineMeshData;

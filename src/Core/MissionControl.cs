@@ -11,7 +11,6 @@ using BattleTech.Framework;
 using MissionControl.Data;
 using MissionControl.Logic;
 using MissionControl.Rules;
-using MissionControl.Utils;
 using MissionControl.EncounterFactories;
 using MissionControl.ContractTypeBuilders;
 using MissionControl.Patches;
@@ -146,7 +145,7 @@ namespace MissionControl {
       EncounterLayerGameObject = EncounterLayerData.gameObject;
       EncounterLayerData.CalculateEncounterBoundary();
 
-      if (HexGrid == null) HexGrid = ReflectionHelper.GetPrivateStaticField(typeof(WorldPointGameLogic), "_hexGrid") as HexGrid;
+      if (HexGrid == null) HexGrid = WorldPointGameLogic._hexGrid;
     }
 
     private EncounterLayerData ConstructCustomContractType() {

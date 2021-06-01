@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-
-using BattleTech;
-
 using MissionControl.Logic;
 
 namespace MissionControl.Rules {

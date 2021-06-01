@@ -1,14 +1,10 @@
 using UnityEngine;
-
-using System;
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 
 using BattleTech;
 
 using MissionControl.Rules;
-using MissionControl.Utils;
 
 namespace MissionControl.Logic {
   public abstract class SpawnLogic : SceneManipulationLogic {

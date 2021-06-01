@@ -1,5 +1,3 @@
-using BattleTech;
-
 namespace MissionControl.Messages {
   public class ChunkMessage : EncounterObjectMessage {
 

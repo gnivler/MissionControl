@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-
-using Harmony;
-
 using BattleTech;
 
 public enum BehaviourInjectionOrder { BEFORE_SIBLING, AFTER_SIBLING };

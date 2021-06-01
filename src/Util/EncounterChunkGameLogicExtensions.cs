@@ -4,8 +4,6 @@ using BattleTech.Framework;
 
 using Harmony;
 
-using MissionControl;
-
 public static class EncounterChunkGameLogicExtensions {
   public static void SetObjectivesAsPrimary(this EncounterChunkGameLogic encounterChunkGameLogic, bool flag) {
     ItemRegistry itemRegistry = UnityGameInstance.BattleTechGame.Combat.ItemRegistry;
@@ -14,7 +12,7 @@ public static class EncounterChunkGameLogicExtensions {
     foreach (ObjectiveGameLogic objectiveGameLogic in objectiveGameLogics) {
       string setting = flag ? "primary" : "non-primary";
       MissionControl.Main.LogDebug($"[SetObjectivesAsPrimary] Setting '{objectiveGameLogic.gameObject.name}' {setting}");
-      AccessTools.Field(typeof(ObjectiveGameLogic), "primary").SetValue(objectiveGameLogic, flag);
+      objectiveGameLogic.primary = flag;
     }
 
 

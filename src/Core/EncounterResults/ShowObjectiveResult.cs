@@ -26,13 +26,13 @@ namespace MissionControl.Result {
 
     public void ShowObjective(ObjectiveGameLogic objectiveGameLogic) {
       objectiveGameLogic.displayToUser = true;
-      AccessTools.Method(typeof(ObjectiveGameLogic), "ShowObjective").Invoke(objectiveGameLogic, null);
+      objectiveGameLogic.ShowObjective();
     }
 
     public void ShowContractObjective(ContractObjectiveGameLogic contractObjectiveGameLogic) {
       contractObjectiveGameLogic.LogObjective("Contract Objective Shown");
       contractObjectiveGameLogic.displayToUser = true;
-      AccessTools.Field(typeof(ContractObjectiveGameLogic), "currentObjectiveStatus").SetValue(contractObjectiveGameLogic, ObjectiveStatus.Active);
+      contractObjectiveGameLogic.currentObjectiveStatus = ObjectiveStatus.Active;
       EncounterLayerParent.EnqueueLoadAwareMessage(new ObjectiveUpdated(contractObjectiveGameLogic.encounterObjectGuid));
     }
   }

@@ -7,7 +7,7 @@ namespace MissionControl.Patches {
   public class ObjectiveGameLogicActivateObjectivePatch {
     static void Postfix(ObjectiveGameLogic __instance) {
       Main.LogDebug($"[ObjectiveGameLogicActivateObjectivePatch.Postfix] Running...");
-      AccessTools.Method(typeof(ObjectiveGameLogic), "OnBuildingSpawned").Invoke(__instance, new object[] { null });
+      __instance.OnBuildingSpawned(null);
     }
   }
 }

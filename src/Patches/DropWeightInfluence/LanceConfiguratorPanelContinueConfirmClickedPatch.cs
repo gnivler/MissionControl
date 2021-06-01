@@ -12,7 +12,7 @@ namespace MissionControl.Patches {
       GameObject lanceHeaderWidgetGo = GameObject.Find("uixPrfPanel_LC_LanceConfigTopBar-Widget-MANAGED");
       if (lanceHeaderWidgetGo != null) {
         LanceHeaderWidget lanceHeaderWidget = lanceHeaderWidgetGo.GetComponent<LanceHeaderWidget>();
-        SGDifficultyIndicatorWidget lanceRatingWidget = (SGDifficultyIndicatorWidget)AccessTools.Field(typeof(LanceHeaderWidget), "lanceRatingWidget").GetValue(lanceHeaderWidget);
+        SGDifficultyIndicatorWidget lanceRatingWidget = lanceHeaderWidget.lanceRatingWidget;
 
         MissionControl.Instance.PlayerLanceDropDifficultyValue = lanceRatingWidget.Difficulty;
         MissionControl.Instance.PlayerLanceDropSkullRating = lanceRatingWidget.Difficulty / 2f;
@@ -27,7 +27,7 @@ namespace MissionControl.Patches {
       if (lanceConfigPanelGo != null) {
         float tonnage = 0f;
         LanceConfiguratorPanel lanceConfigPanel = lanceConfigPanelGo.GetComponent<LanceConfiguratorPanel>();
-        LanceLoadoutSlot[] loadoutSlots = (LanceLoadoutSlot[])AccessTools.Field(typeof(LanceConfiguratorPanel), "loadoutSlots").GetValue(lanceConfigPanel);
+        LanceLoadoutSlot[] loadoutSlots = lanceConfigPanel.loadoutSlots;
 
         foreach (LanceLoadoutSlot lanceLoadoutSlot in loadoutSlots) {
           if (lanceLoadoutSlot.SelectedMech != null) {

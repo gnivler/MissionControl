@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 
-using BattleTech;
-
 namespace MissionControl.AI {
   public class NodeSearchResult {
     public CompositeBehaviorNode ParentNode { get; private set; }

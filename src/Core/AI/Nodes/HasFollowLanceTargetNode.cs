@@ -1,9 +1,4 @@
-using System;
 using BattleTech;
-
-using Harmony;
-
-using MissionControl;
 
 namespace MissionControl.AI {
 	public class HasFollowLanceTargetNode : LeafBehaviorNode {

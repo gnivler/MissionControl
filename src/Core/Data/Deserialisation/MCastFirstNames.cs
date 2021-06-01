@@ -2,8 +2,6 @@ using System.Collections.Generic;
 
 using Newtonsoft.Json;
 
-using HBS.Collections;
-
 namespace MissionControl.Data {
   public class MCastFirstNames {
     [JsonProperty("All")]

@@ -1,13 +1,8 @@
 using UnityEngine;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 
 using BattleTech;
-using BattleTech.Designed;
-
 using MissionControl.Rules;
-using MissionControl.Utils;
 
 namespace MissionControl.Logic {
   public class SpawnLanceMembersAroundTarget : SpawnLanceLogic {

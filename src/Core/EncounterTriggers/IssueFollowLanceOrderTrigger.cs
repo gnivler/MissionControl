@@ -4,9 +4,6 @@ using System.Collections.Generic;
 
 using BattleTech;
 using BattleTech.Framework;
-
-using HBS.Collections;
-
 using MissionControl.AI;
 using MissionControl.Result;
 using MissionControl.Conditional;

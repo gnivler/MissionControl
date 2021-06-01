@@ -63,7 +63,7 @@ namespace MissionControl.Patches {
 
       foreach (AbstractActor actor in actors) {
         actor.EvasivePipsCurrent += evasionToAdd;
-        AccessTools.Property(typeof(AbstractActor), "EvasivePipsTotal").SetValue(actor, actor.EvasivePipsCurrent, null);
+        actor.EvasivePipsTotal = actor.EvasivePipsCurrent;
         combatState.MessageCenter.PublishMessage(new EvasiveChangedMessage(actor.GUID, actor.EvasivePipsCurrent));
       }
     }

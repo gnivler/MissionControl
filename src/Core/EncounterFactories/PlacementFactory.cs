@@ -1,7 +1,4 @@
 using UnityEngine;
-
-using BattleTech;
-
 using MissionControl.LogicComponents.Placers;
 
 namespace MissionControl.EncounterFactories {

@@ -1,13 +1,6 @@
-using System;
-
 using System.Linq;
 using System.Collections.Generic;
-
-using BattleTech;
-using BattleTech.Designed;
 using BattleTech.Framework;
-
-using MissionControl;
 
 namespace MissionControl.Conditional {
   public class ObjectiveStatusesConditional : DesignConditional {

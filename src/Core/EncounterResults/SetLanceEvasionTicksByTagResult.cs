@@ -24,7 +24,7 @@ namespace MissionControl.Result {
           AbstractActor actor = combatant as AbstractActor;
 
           actor.EvasivePipsCurrent = Amount;
-          AccessTools.Property(typeof(AbstractActor), "EvasivePipsTotal").SetValue(actor, actor.EvasivePipsCurrent, null);
+          actor.EvasivePipsTotal = actor.EvasivePipsCurrent;
           UnityGameInstance.BattleTechGame.Combat.MessageCenter.PublishMessage(new EvasiveChangedMessage(actor.GUID, actor.EvasivePipsCurrent));
         }
       }

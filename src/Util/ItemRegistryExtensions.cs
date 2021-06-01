@@ -1,20 +1,11 @@
-using UnityEngine;
-
-using System.Linq;
 using System.Collections.Generic;
-
-using BattleTech;
-using BattleTech.Designed;
-using BattleTech.Framework;
-
-using MissionControl;
-
 using Harmony;
 
 public static class ItemRegistryExtensions {
-  public static void RemoveItem(this ItemRegistry registry, string guid) {
-    Dictionary<string, ITaggedItem> itemsByGuid = (Dictionary<string, ITaggedItem>)AccessTools.Property(typeof(ItemRegistry), "itemsByGuid").GetValue(registry, null);
-    Dictionary<TaggedObjectType, List<ITaggedItem>> itemsByType = (Dictionary<TaggedObjectType, List<ITaggedItem>>)AccessTools.Property(typeof(ItemRegistry), "itemsByType").GetValue(registry, null);
+  public static void RemoveItem(this ItemRegistry registry, string guid)
+  {
+    Dictionary<string, ITaggedItem> itemsByGuid = registry.itemsByGuid;
+    Dictionary<TaggedObjectType, List<ITaggedItem>> itemsByType = registry.itemsByType;
 
     if (itemsByGuid.ContainsKey(guid)) {
       ITaggedItem item = itemsByGuid[guid];

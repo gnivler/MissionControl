@@ -89,10 +89,12 @@ namespace MissionControl.ContractTypeBuilders {
         rewards.Count > 0
       );
 
-      if (isPrimaryObjectve) {
-        AccessTools.Field(typeof(ObjectiveGameLogic), "primary").SetValue(objectiveLogic, true);
-      } else {
-        AccessTools.Field(typeof(ObjectiveGameLogic), "primary").SetValue(objectiveLogic, false);
+      if (isPrimaryObjectve)
+      {
+        objectiveLogic.primary = true;
+      } else
+      {
+        objectiveLogic.primary = false;
       }
 
       DestroyLanceObjectiveRef destroyLanceObjectiveRef = new DestroyLanceObjectiveRef();
